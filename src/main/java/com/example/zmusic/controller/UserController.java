@@ -1,36 +1,30 @@
 package com.example.zmusic.controller;
 
+import com.example.zmusic.dto.UserCreateDto;
 import com.example.zmusic.mapper.UserMapper;
 import com.example.zmusic.service.UserService;
 import com.example.zmusic.vo.UserVo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
-    private UserMapper userMapper;
-
+    private final UserMapper userMapper;
 
     @GetMapping("/")
     public List<UserVo> list() {
         return userMapper.toVo(userService.list());
     }
 
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    @PostMapping("/")
+    public UserVo createUser(@RequestBody UserCreateDto userCreateDto) {
+        return userMapper.toVo(userService.create(userCreateDto));
     }
 }
