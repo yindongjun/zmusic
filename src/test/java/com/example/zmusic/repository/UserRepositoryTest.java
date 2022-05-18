@@ -29,7 +29,7 @@ class UserRepositoryTest {
 
         userRepository.save(userToSave);
 
-        User foundUser = userRepository.getByUsername("jzheng");
+        User foundUser = userRepository.findByUsername("jzheng").get();
         System.out.println(foundUser);
     }
 }
