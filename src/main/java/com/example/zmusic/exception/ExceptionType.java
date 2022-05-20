@@ -1,11 +1,11 @@
 package com.example.zmusic.exception;
 
 public enum ExceptionType {
-    INNER_ERROR(500, "系统内部异常"),
-    UNAUTHORIZED(401, "未登录"),
     BAD_REQUEST(400, "请求错误"),
+    UNAUTHORIZED(401, "未登录"),
     FORBIDDEN(403, "无权操作"),
     NOT_FOUND(404, "未找到"),
+    INNER_ERROR(500, "系统内部异常"),
 
     // 000_00_000
     USERNAME_DUPLICATE(40001001, "用户名重复"),

@@ -1,6 +1,6 @@
 package com.example.zmusic.mapper;
 
-import com.example.zmusic.dto.UserCreateDto;
+import com.example.zmusic.request.UserCreateRequest;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.entity.User;
 import com.example.zmusic.vo.UserVo;
@@ -20,5 +20,5 @@ public interface UserMapper {
 
     List<UserVo> toVo(List<UserDto> userDtos);
 
-    User toDo(UserCreateDto userCreateDto);
+    User toDo(UserCreateRequest userCreateRequest);
 }

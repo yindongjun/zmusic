@@ -1,6 +1,7 @@
 package com.example.zmusic.controller;
 
 import com.example.zmusic.constants.AuthenticationConfigConstants;
+import com.example.zmusic.dto.RoleDto;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.dto.UserLoginDto;
 import com.example.zmusic.mapper.UserMapper;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/auth")
@@ -26,8 +28,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthLoginVo login(@RequestBody UserLoginDto userLoginDto, HttpServletRequest request) {
+        // check login user
         UserDto userDto = userService.login(userLoginDto, request);
-        String token = JwtUtils.generate(userDto.getUsername(),null, AuthenticationConfigConstants.EXPIRATION_TIME, AuthenticationConfigConstants.SECRET);
+
+        // user.roles -> role title list
+        List<String> roles = userDto.getRoles().stream().map(RoleDto::getTitle).toList();
+        String token = JwtUtils.generate(userDto.getUsername(), roles, AuthenticationConfigConstants.EXPIRATION_TIME, AuthenticationConfigConstants.SECRET);
         return new AuthLoginVo(userMapper.toVo(userDto), token);
     }
 }

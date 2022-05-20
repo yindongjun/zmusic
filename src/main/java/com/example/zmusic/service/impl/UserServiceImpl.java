@@ -1,6 +1,6 @@
 package com.example.zmusic.service.impl;
 
-import com.example.zmusic.dto.UserCreateDto;
+import com.example.zmusic.request.UserCreateRequest;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.dto.UserLoginDto;
 import com.example.zmusic.entity.User;
@@ -12,7 +12,6 @@ import com.example.zmusic.service.UserService;
 import com.example.zmusic.utils.IpUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,16 +37,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto create(UserCreateDto userCreateDto) {
-        checkUsername(userCreateDto.getUsername());
+    public UserDto create(UserCreateRequest userCreateRequest) {
+        checkUsername(userCreateRequest.getUsername());
 
-        User user = userMapper.toDo(userCreateDto);
+        User user = userMapper.toDo(userCreateRequest);
 
+        // encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         preInsert(user);
         User userCreated = userRepository.save(user);
-
         return userMapper.toDto(userCreated);
     }
 
@@ -56,6 +55,11 @@ public class UserServiceImpl implements UserService {
         user.setLocked(false);
     }
 
+    /**
+     * 检查用户名是否重复
+     *
+     * @param username 用户名
+     */
     private void checkUsername(String username) {
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
