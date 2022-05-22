@@ -99,5 +99,13 @@ public class User extends AbstractEntity implements UserDetails {
     public boolean isEnabled() {
         return getEnabled();
     }
+
+    public boolean locked() {
+        return this.locked;
+    }
+
+    public boolean disabled() {
+        return !this.enabled;
+    }
 }
 

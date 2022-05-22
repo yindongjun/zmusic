@@ -1,13 +1,14 @@
-package com.example.zmusic.vo;
+package com.example.zmusic.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLoginVo {
-    private UserVo user;
+@Builder
+public class TokenDto {
     private String token;
 }
