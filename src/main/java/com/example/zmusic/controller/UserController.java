@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -40,7 +42,8 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public Page<UserVo> list(@PageableDefault(sort = {"createdTime"}, direction = Sort.Direction.ASC)
+    @RolesAllowed({"ADMIN"})
+    public Page<UserVo> search(@PageableDefault(sort = {"createdTime"}, direction = Sort.Direction.ASC)
                                  Pageable pageable) {
         Page<UserDto> page = userService.search(pageable);
         return page.map(userMapper::toVo);
