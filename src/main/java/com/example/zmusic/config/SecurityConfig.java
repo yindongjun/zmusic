@@ -2,6 +2,8 @@ package com.example.zmusic.config;
 
 import com.example.zmusic.constants.AuthenticationConfigConstants;
 import com.example.zmusic.filter.JwtAuthorizationFilter;
+import com.example.zmusic.handler.CustomAccessDeniedHandler;
+import com.example.zmusic.handler.CustomAuthenticationEntryPoint;
 import com.example.zmusic.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL, AuthenticationConfigConstants.CREATE_TOKEN).permitAll()
+                .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.AUTH_LOGIN).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
+                .exceptionHandling()
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .and()
                 // disable session creation on Spring Security
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
@@ -41,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**")
                 .antMatchers("/v3/**")
                 .antMatchers("/doc.html")
-                .antMatchers("/weixin/**");
+                .antMatchers("/weixin/**")
+                .antMatchers("/hello");
     }
 
     @Override

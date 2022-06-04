@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.zmusic.constants.AuthenticationConfigConstants;
 import com.example.zmusic.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserService userService;
@@ -32,13 +34,14 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader(AuthenticationConfigConstants.HEADER_STRING);
 
+        // invalid token
         if (header == null || !header.startsWith(AuthenticationConfigConstants.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
             return;
         }
 
+        // generate username password authentication token
         UsernamePasswordAuthenticationToken token = getUsernamePasswordAuthenticationToken(request);
-
         SecurityContextHolder.getContext().setAuthentication(token);
 
         chain.doFilter(request, response);
@@ -47,19 +50,23 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(AuthenticationConfigConstants.HEADER_STRING);
         if (StringUtils.hasText(token)) {
-            DecodedJWT verify = JWT.require(Algorithm.HMAC512(AuthenticationConfigConstants.SECRET))
-                    .build()
-                    .verify(token.replace(AuthenticationConfigConstants.TOKEN_PREFIX, ""));
-            String username = verify.getSubject();
-            if (username == null) {
-                return null;
+            try {
+                DecodedJWT verify = JWT.require(Algorithm.HMAC512(AuthenticationConfigConstants.SECRET))
+                        .build()
+                        .verify(token.replace(AuthenticationConfigConstants.TOKEN_PREFIX, ""));
+                String username = verify.getSubject();
+                if (username == null) {
+                    return null;
+                }
+
+                UserDetails user = userService.loadUserByUsername(username);
+
+                return new UsernamePasswordAuthenticationToken(
+                        username, null, user.getAuthorities()
+                );
+            } catch (Exception e) {
+                log.warn("令牌校验异常, 令牌: {}, 异常信息: {}", token, e.getMessage());
             }
-
-            UserDetails user = userService.loadUserByUsername(username);
-
-            return new UsernamePasswordAuthenticationToken(
-                    username, null, user.getAuthorities()
-            );
         }
         return null;
     }

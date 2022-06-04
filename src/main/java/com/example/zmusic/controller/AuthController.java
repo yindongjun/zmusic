@@ -1,10 +1,12 @@
 package com.example.zmusic.controller;
 
-import com.example.zmusic.dto.TokenDto;
+import com.example.zmusic.dto.LoginDto;
 import com.example.zmusic.mapper.TokenMapper;
 import com.example.zmusic.request.TokenCreateRequest;
 import com.example.zmusic.service.UserService;
 import com.example.zmusic.vo.TokenVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,20 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/tokens")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
-public class TokenController {
+@Api(tags = "认证管理")
+public class AuthController {
 
     private final UserService userService;
 
     private final TokenMapper tokenMapper;
 
-    @PostMapping("/")
-    public TokenVo create(@Validated @RequestBody TokenCreateRequest tokenCreateRequest,
+    @PostMapping("/login")
+    @ApiOperation("创建令牌")
+    public TokenVo login(@Validated @RequestBody TokenCreateRequest tokenCreateRequest,
                           HttpServletRequest request) {
         // check username and password
-        TokenDto tokenDto = userService.createToken(tokenCreateRequest, request);
+        LoginDto loginDto = userService.login(tokenCreateRequest, request);
 
-        return tokenMapper.toVo(tokenDto);
+        return tokenMapper.toVo(loginDto);
     }
 }

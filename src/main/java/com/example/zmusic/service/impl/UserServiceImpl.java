@@ -1,7 +1,7 @@
 package com.example.zmusic.service.impl;
 
 import com.example.zmusic.constants.AuthenticationConfigConstants;
-import com.example.zmusic.dto.TokenDto;
+import com.example.zmusic.dto.LoginDto;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.entity.User;
 import com.example.zmusic.exception.BizException;
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public TokenDto createToken(TokenCreateRequest tokenCreateRequest, HttpServletRequest request) {
+    public LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request) {
         User user = userRepository.findByUsername(tokenCreateRequest.getUsername())
                 .orElseThrow(() -> new BizException(ExceptionType.USER_NOT_FOUND));
 
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
         // 校验用户名和密码
         boolean isMatch = passwordEncoder.matches(tokenCreateRequest.getPassword(), user.getPassword());
         // 检验失败
-        if (isMatch) {
+        if (!isMatch) {
             throw new BizException(ExceptionType.USERNAME_PASSWORD_NOT_MATCH);
         }
 
@@ -144,12 +144,13 @@ public class UserServiceImpl implements UserService {
         // 更新用户的登录信息
         userRepository.save(user);
 
+        // 生成 token
         String token = JwtUtils.generate(user.getUsername(),
                 AuthenticationConfigConstants.EXPIRATION_TIME,
                 AuthenticationConfigConstants.SECRET);
 
         // build token dto and return
-        return TokenDto.builder()
+        return LoginDto.builder()
                 .token(token)
                 .build();
     }

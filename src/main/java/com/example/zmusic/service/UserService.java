@@ -1,6 +1,6 @@
 package com.example.zmusic.service;
 
-import com.example.zmusic.dto.TokenDto;
+import com.example.zmusic.dto.LoginDto;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.request.TokenCreateRequest;
 import com.example.zmusic.request.UserCreateRequest;
@@ -26,7 +26,7 @@ public interface UserService extends UserDetailsService {
 
     void delete(String id);
 
-    TokenDto createToken(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
+    LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
 
     UserDto getCurrentUser();
 }
