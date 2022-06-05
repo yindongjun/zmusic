@@ -29,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.AUTH_LOGIN).permitAll()
+                .antMatchers(AuthenticationConfigConstants.WECHAT_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
