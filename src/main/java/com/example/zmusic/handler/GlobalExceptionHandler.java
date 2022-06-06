@@ -15,6 +15,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BizException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse bizExceptionHandler(BizException e) {
         return ErrorResponse.builder()
                 .code(e.getCode())
