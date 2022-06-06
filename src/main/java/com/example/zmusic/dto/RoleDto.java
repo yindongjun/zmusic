@@ -1,8 +1,11 @@
 package com.example.zmusic.dto;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RoleDto {
     private String id;
 

@@ -1,8 +1,9 @@
 package com.example.zmusic.dto;
 
-import com.example.zmusic.vo.RoleVo;
+import com.example.zmusic.enums.Gender;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,5 +14,15 @@ public class UserDto {
 
     private String nickname;
 
-    private List<RoleVo> roles;
+    private Gender gender;
+
+    private List<RoleDto> roles;
+
+    private Boolean locked;
+
+    private Boolean enabled;
+
+    private String lastLoginIp;
+
+    private LocalDateTime lastLoginTime;
 }

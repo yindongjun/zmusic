@@ -1,13 +1,14 @@
 package com.example.zmusic.controller;
 
-import com.example.zmusic.constants.AuthenticationConfigConstants;
-import com.example.zmusic.dto.UserDto;
-import com.example.zmusic.dto.UserLoginDto;
-import com.example.zmusic.mapper.UserMapper;
+import com.example.zmusic.dto.LoginDto;
+import com.example.zmusic.mapper.TokenMapper;
+import com.example.zmusic.request.TokenCreateRequest;
 import com.example.zmusic.service.UserService;
-import com.example.zmusic.utils.JwtUtils;
-import com.example.zmusic.vo.AuthLoginVo;
+import com.example.zmusic.vo.TokenVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,16 +19,20 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Api(tags = "认证管理")
 public class AuthController {
 
     private final UserService userService;
 
-    private final UserMapper userMapper;
+    private final TokenMapper tokenMapper;
 
     @PostMapping("/login")
-    public AuthLoginVo login(@RequestBody UserLoginDto userLoginDto, HttpServletRequest request) {
-        UserDto userDto = userService.login(userLoginDto, request);
-        String token = JwtUtils.generate(userDto.getUsername(),null, AuthenticationConfigConstants.EXPIRATION_TIME, AuthenticationConfigConstants.SECRET);
-        return new AuthLoginVo(userMapper.toVo(userDto), token);
+    @ApiOperation("创建令牌")
+    public TokenVo login(@Validated @RequestBody TokenCreateRequest tokenCreateRequest,
+                          HttpServletRequest request) {
+        // check username and password
+        LoginDto loginDto = userService.login(tokenCreateRequest, request);
+
+        return tokenMapper.toVo(loginDto);
     }
 }

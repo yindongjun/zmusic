@@ -6,12 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import java.util.Date;
 
 public class JwtUtils {
-    public static String generate(String subject, String roles, long expireTime, String secret) {
+    public static String generate(String subject, long expireTime, String secret) {
         return JWT.create()
                 .withSubject(subject)
-                .withClaim("role", roles)
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireTime))
                 .sign(Algorithm.HMAC512(secret));
-
     }
 }
