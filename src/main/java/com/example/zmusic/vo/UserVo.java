@@ -1,14 +1,16 @@
 package com.example.zmusic.vo;
 
 import com.example.zmusic.enums.Gender;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Data
-public class UserVo {
-    private String id;
-
+@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserVo extends BasicVo {
     private String username;
 
     private String nickname;

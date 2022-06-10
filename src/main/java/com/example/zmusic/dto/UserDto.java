@@ -25,4 +25,14 @@ public class UserDto {
     private String lastLoginIp;
 
     private LocalDateTime lastLoginTime;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createdTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
 }

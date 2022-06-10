@@ -150,9 +150,7 @@ public class UserServiceImpl implements UserService {
                 AuthenticationConfigConstants.SECRET);
 
         // build token dto and return
-        return LoginDto.builder()
-                .token(token)
-                .build();
+        return new LoginDto(token);
     }
 
     @Override

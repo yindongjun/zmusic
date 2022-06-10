@@ -5,12 +5,13 @@ import com.example.zmusic.entity.User;
 import com.example.zmusic.request.UserCreateRequest;
 import com.example.zmusic.request.UserUpdateRequest;
 import com.example.zmusic.vo.UserVo;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface UserMapper {
     UserDto toDto(User user);
 
