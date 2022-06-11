@@ -1,5 +1,6 @@
 package com.example.zmusic.dto;
 
+import com.example.zmusic.entity.User;
 import com.example.zmusic.enums.FileStatus;
 import com.example.zmusic.enums.FileType;
 import com.example.zmusic.enums.Storage;
@@ -28,4 +29,9 @@ public class FileDto {
     private LocalDateTime createdTime;
 
     private LocalDateTime updateTime;
+
+    protected User createUser;
+
+    private User updateUser;
+
 }

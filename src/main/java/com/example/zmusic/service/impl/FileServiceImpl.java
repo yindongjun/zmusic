@@ -68,9 +68,9 @@ public class FileServiceImpl implements FileService {
 
         // 存储新文件
         StorageDto newStorageDto = getDefaultStorageService().createFile(newFile);
-        fileMapper.updateEntity(newStorageDto, oldFile);
 
         // 更新文件记录
+        fileMapper.updateEntity(newStorageDto, oldFile);
         File updatedFile = fileRepository.save(oldFile);
 
         return fileMapper.toDto(updatedFile);

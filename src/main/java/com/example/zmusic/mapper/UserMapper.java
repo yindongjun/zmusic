@@ -15,14 +15,18 @@ import java.util.List;
 public interface UserMapper {
     UserDto toDto(User user);
 
+
     UserVo toVo(UserDto userDto);
 
     List<UserDto> toDto(List<User> users);
 
     List<UserVo> toVo(List<UserDto> userDtos);
 
+    User toEntity(UserDto userDto);
+
     User createEntity(UserCreateRequest userCreateRequest);
 
     // 将 userUpdateRequest 中的属性赋值到 user 对象中
     void updateEntity(UserUpdateRequest userUpdateRequest, @MappingTarget User user);
+
 }

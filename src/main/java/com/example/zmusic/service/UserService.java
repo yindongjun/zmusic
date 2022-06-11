@@ -16,6 +16,8 @@ public interface UserService extends UserDetailsService {
 
     UserDto get(String id);
 
+    UserDto getByUsername(String username);
+
     Page<UserDto> search(Pageable pageable);
 
     List<UserDto> list();
@@ -29,4 +31,5 @@ public interface UserService extends UserDetailsService {
     LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
 
     UserDto getCurrentUser();
+
 }

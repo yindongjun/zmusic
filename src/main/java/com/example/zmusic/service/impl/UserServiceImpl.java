@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDto getByUsername(String username) {
+        return userMapper.toDto(getEntityByUsername(username));
+    }
+
+    @Override
     public Page<UserDto> search(Pageable pageable) {
         return userRepository.findAll(pageable)
                 .map(userMapper::toDto);

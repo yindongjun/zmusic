@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Role extends AbstractEntity {
+public class Role extends BaseEntity {
     /**
      * 角色名称
      */

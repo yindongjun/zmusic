@@ -1,5 +1,6 @@
 package com.example.zmusic.dto;
 
+import com.example.zmusic.entity.User;
 import com.example.zmusic.enums.Gender;
 import lombok.Data;
 
@@ -35,4 +36,8 @@ public class UserDto {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    protected User createUser;
+
+    protected User updateUser;
 }

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User extends AbstractEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
     /**
      * 用户名
