@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.zmusic.constants.AuthenticationConfigConstants;
+import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -61,13 +62,22 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
                 UserDetails user = userService.loadUserByUsername(username);
 
-                return new UsernamePasswordAuthenticationToken(
+                UsernamePasswordAuthenticationToken createdToken = new UsernamePasswordAuthenticationToken(
                         username, null, user.getAuthorities()
                 );
+
+                setDetails(createdToken, username);
+
+                return createdToken;
             } catch (Exception e) {
                 log.warn("令牌校验异常, 令牌: {}, 异常信息: {}", token, e.getMessage());
             }
         }
         return null;
+    }
+
+    private void setDetails(UsernamePasswordAuthenticationToken token, String username) {
+        UserDto user = userService.getByUsername(username);
+        token.setDetails(user);
     }
 }

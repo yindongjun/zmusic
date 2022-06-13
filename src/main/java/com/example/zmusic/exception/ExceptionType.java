@@ -13,11 +13,24 @@ public enum ExceptionType {
     USER_NOT_FOUND(40001002, "用户不存在"),
     USERNAME_PASSWORD_NOT_MATCH(40001003, "用户名或密码错误"),
 
+
+    // MUSIC
     MUSIC_NOT_FOUND(40002001, "音乐不存在"),
+
+
+    // FILE
+    FILE_NOT_FOUND(40003000, "文件不存在"),
+    STORAGE_NOT_FOUND(40003101, "文件上传服务不存在"),
+    CREATE_FILE_FAIL(40003102, "创建文件失败"),
+    DELETE_FILE_FAIL(40003103, "删除文件失败"),
+
+    // Artist
+    ARTIST_NOT_FOUND(40004100, "艺术家不存在"),
 
     // 500 错误
     USER_NOT_ENABLE(50001001, "用户未启用"),
     USER_LOCKED(50001002, "用户被锁定");
+
     private final Integer code;
 
     private final String message;

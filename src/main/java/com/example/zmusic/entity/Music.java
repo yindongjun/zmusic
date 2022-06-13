@@ -14,7 +14,7 @@ import javax.persistence.Enumerated;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Music extends AbstractEntity {
+public class Music extends BaseEntity {
     /**
      * 音乐名称
      */
