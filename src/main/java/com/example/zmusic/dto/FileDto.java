@@ -5,13 +5,11 @@ import com.example.zmusic.enums.FileStatus;
 import com.example.zmusic.enums.FileType;
 import com.example.zmusic.enums.Storage;
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class FileDto {
-    private String id;
-
+@EqualsAndHashCode(callSuper = false)
+public class FileDto extends BaseDto {
     private String name;
 
     private Long size;
@@ -25,10 +23,6 @@ public class FileDto {
     private Storage storage;
 
     private FileStatus status;
-
-    private LocalDateTime createdTime;
-
-    private LocalDateTime updateTime;
 
     protected User createUser;
 

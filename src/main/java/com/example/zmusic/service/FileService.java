@@ -1,12 +1,12 @@
 package com.example.zmusic.service;
 
 import com.example.zmusic.dto.FileDto;
+import com.example.zmusic.entity.File;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface FileService {
-    FileDto get(String id);
+public interface FileService extends GeneralService<File, FileDto> {
 
     Page<FileDto> search(Pageable pageable);
 
@@ -14,8 +14,5 @@ public interface FileService {
 
     FileDto update(String id, MultipartFile newFile);
 
-    void deleteById(String id);
-
     FileDto getByFileKey(String key);
-
 }

@@ -143,7 +143,7 @@ class FileServiceTest {
             log.info(findFileDto.toString());
 
             // 删除文件
-            fileService.deleteById(fileDto.getId());
+            fileService.delete(fileDto.getId());
 
             // 检察数据库中是否存在文件
             Assertions.assertThrows(BizException.class, () -> fileService.get(fileDto.getId()));

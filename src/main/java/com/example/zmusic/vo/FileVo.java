@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class FileVo extends BasicVo {
+public class FileVo extends BaseVo {
     private String name;
 
     private Long size;

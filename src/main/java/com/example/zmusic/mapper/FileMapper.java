@@ -9,18 +9,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
-public interface FileMapper {
+public interface FileMapper extends MapperInterface<File, FileDto> {
 
     FileVo toVo(FileDto fileDto);
 
-    FileDto toDto(File file);
-
-    File createEntity(FileDto fileDto);
-
-    File createEntity(StorageDto storageDto);
-
-
-    void updateEntity(FileDto fileDto, @MappingTarget File file);
+    File toEntity(StorageDto storageDto);
 
     void updateEntity(StorageDto storageDto, @MappingTarget File file);
 

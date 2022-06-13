@@ -28,7 +28,7 @@ public class LocalStorageServiceImpl implements StorageService {
 
     @Override
     public StorageDto createFile(MultipartFile file) {
-        String fileName = file.getName();
+        String fileName = file.getOriginalFilename();
         String suffix = FileUtil.getSuffix(fileName);
         String fileKey = KsuidUtils.generateKsuid() + "." + suffix;
 

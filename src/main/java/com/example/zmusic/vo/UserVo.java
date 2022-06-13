@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVo extends BasicVo {
+public class UserVo extends BaseVo {
     private String username;
 
     private String nickname;

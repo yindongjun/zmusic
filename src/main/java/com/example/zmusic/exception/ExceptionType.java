@@ -19,13 +19,13 @@ public enum ExceptionType {
 
 
     // FILE
-    FILE_NOT_FOUND(40003001, "文件不存在"),
+    FILE_NOT_FOUND(40003000, "文件不存在"),
+    STORAGE_NOT_FOUND(40003101, "文件上传服务不存在"),
+    CREATE_FILE_FAIL(40003102, "创建文件失败"),
+    DELETE_FILE_FAIL(40003103, "删除文件失败"),
 
-    // FILE COS
-    STORAGE_NOT_FOUND(40003100, "文件上传服务不存在"),
-    CREATE_FILE_FAIL(40003101, "创建文件失败"),
-    DELETE_FILE_FAIL(40003102, "删除文件失败"),
-
+    // Artist
+    ARTIST_NOT_FOUND(40004100, "艺术家不存在"),
 
     // 500 错误
     USER_NOT_ENABLE(50001001, "用户未启用"),

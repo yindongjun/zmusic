@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MusicVo extends BasicVo {
+public class MusicVo extends BaseVo {
     private String name;
 
     private MusicStatus status;
