@@ -27,6 +27,9 @@ public enum ExceptionType {
     // Artist
     ARTIST_NOT_FOUND(40004100, "艺术家不存在"),
 
+    // Playlist
+    PLAYLIST_NOT_FOUND(4000500, "歌单不存在"),
+
     // 500 错误
     USER_NOT_ENABLE(50001001, "用户未启用"),
     USER_LOCKED(50001002, "用户被锁定");

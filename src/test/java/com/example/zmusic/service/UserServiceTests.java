@@ -5,6 +5,7 @@ import com.example.zmusic.entity.User;
 import com.example.zmusic.enums.Gender;
 import com.example.zmusic.repository.RoleRepository;
 import com.example.zmusic.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @SpringBootTest
+@Slf4j
 public class UserServiceTests {
     @Autowired
     private UserService userService;
@@ -25,8 +27,12 @@ public class UserServiceTests {
 
     @Test
     public void test_createUser() {
-        Role role = Role.builder().title("ADMIN").name("ADMIN").build();
-        Role saveRole = roleRepository.save(role);
+        Role role1 = Role.builder().title("ADMIN").name("ADMIN").build();
+        Role saveRole1 = roleRepository.save(role1);
+        Role role2 = Role.builder().title("USER").name("USER").build();
+        Role saveRole2 = roleRepository.save(role2);
+        Role role3 = Role.builder().title("SMALL_ADMIN").name("SMALL_ADMIN").build();
+        Role saveRole3 = roleRepository.save(role3);
 
         User user = User.builder()
                 .username("jzheng")
@@ -38,14 +44,20 @@ public class UserServiceTests {
                 .lastLoginTime(LocalDateTime.now())
                 .lastLoginIp("127.0.0.1")
                 .build();
-        userRepository.save(user);
+
+        user.setRoles(Arrays.asList(
+                saveRole1
+        ));
+        User save1 = userRepository.save(user);
+        log.info(save1.toString());
 
 
         user.setRoles(Arrays.asList(
-                saveRole
+                saveRole1, saveRole2, saveRole3
         ));
 
-        userRepository.save(user);
+        User save2 = userRepository.save(user);
+        log.info(save2.toString());
     }
 
 }
