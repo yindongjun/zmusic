@@ -12,11 +12,9 @@ import javax.persistence.MappedSuperclass;
 @Setter
 @MappedSuperclass
 public abstract class AbstractId {
-    /**
-     * 用户ID
-     */
-    @Id
-    @GeneratedValue(generator = "ksuid")
-    @GenericGenerator(name = "ksuid", strategy = "com.example.zmusic.utils.KsuidIdentifierGenerator")
-    protected String id;
+  /** 用户ID */
+  @Id
+  @GeneratedValue(generator = "ksuid")
+  @GenericGenerator(name = "ksuid", strategy = "com.example.zmusic.utils.KsuidIdentifierGenerator")
+  protected String id;
 }

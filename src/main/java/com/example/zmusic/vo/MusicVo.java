@@ -1,7 +1,11 @@
 package com.example.zmusic.vo;
 
+import com.example.zmusic.entity.Artist;
 import com.example.zmusic.enums.MusicStatus;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -9,9 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class MusicVo extends BaseVo {
-    private String name;
+  private String name;
 
-    private MusicStatus status;
+  private MusicStatus status;
 
-    private String description;
+  private List<Artist> artistList = new ArrayList<>();
+
+  private String description;
 }

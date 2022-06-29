@@ -11,11 +11,11 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public interface MusicMapper {
-    Music createEntity(MusicCreateRequest musicCreateRequest);
+  Music createEntity(MusicCreateRequest musicCreateRequest);
 
-    void updateEntity(MusicUpdateRequest musicUpdateRequest, @MappingTarget Music music);
+  void updateEntity(MusicUpdateRequest musicUpdateRequest, @MappingTarget Music music);
 
-    MusicDto toDto(Music music);
+  MusicDto toDto(Music music);
 
-    MusicVo toVo(MusicDto musicDto);
+  MusicVo toVo(MusicDto musicDto);
 }

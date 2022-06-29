@@ -7,26 +7,25 @@ import com.example.zmusic.request.UserUpdateRequest;
 import com.example.zmusic.vo.UserVo;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValueCheckStrategy;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
-public interface UserMapper {
-    UserDto toDto(User user);
+@Mapper(
+    componentModel = "spring",
+    builder = @Builder(disableBuilder = true),
+    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface UserMapper extends MapperInterface<User, UserDto> {
 
+  UserVo toVo(UserDto userDto);
 
-    UserVo toVo(UserDto userDto);
+  List<UserDto> toDto(List<User> users);
 
-    List<UserDto> toDto(List<User> users);
+  List<UserVo> toVo(List<UserDto> userDtos);
 
-    List<UserVo> toVo(List<UserDto> userDtos);
+  UserDto toDto(UserCreateRequest userCreateRequest);
 
-    User toEntity(UserDto userDto);
-
-    User createEntity(UserCreateRequest userCreateRequest);
-
-    // 将 userUpdateRequest 中的属性赋值到 user 对象中
-    void updateEntity(UserUpdateRequest userUpdateRequest, @MappingTarget User user);
-
+  UserDto toDto(UserUpdateRequest userUpdateRequest);
 }

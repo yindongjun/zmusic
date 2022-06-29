@@ -3,41 +3,35 @@ package com.example.zmusic.dto;
 import com.example.zmusic.entity.User;
 import com.example.zmusic.enums.Gender;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class UserDto {
-    private String id;
+@EqualsAndHashCode(callSuper = false)
+public class UserDto extends BaseDto {
+  private String username;
 
-    private String username;
+  private String nickname;
 
-    private String nickname;
+  private String password;
 
-    private Gender gender;
+  private String confirmPassword;
 
-    private List<RoleDto> roles;
+  private Gender gender;
 
-    private Boolean locked;
+  private List<RoleDto> roles;
 
-    private Boolean enabled;
+  private Boolean locked;
 
-    private String lastLoginIp;
+  private Boolean enabled;
 
-    private LocalDateTime lastLoginTime;
+  private String lastLoginIp;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createdTime;
+  private LocalDateTime lastLoginTime;
 
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
+  protected User createUser;
 
-    protected User createUser;
-
-    protected User updateUser;
+  protected User updateUser;
 }

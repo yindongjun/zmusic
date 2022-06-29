@@ -1,10 +1,11 @@
 package com.example.zmusic.repository;
 
 import com.example.zmusic.entity.File;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface FileRepository extends JpaRepository<File, String> {
-    Optional<File> findFirstByFileKey(String fileKey);
+public interface FileRepository
+    extends JpaRepository<File, String>, JpaSpecificationExecutor<File> {
+  Optional<File> findFirstByFileKey(String fileKey);
 }

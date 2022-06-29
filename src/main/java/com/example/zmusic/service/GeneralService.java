@@ -7,19 +7,19 @@ import com.example.zmusic.mapper.MapperInterface;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GeneralService<Entity extends AbstractId, Dto extends BaseDto> {
-    MapperInterface<Entity, Dto> getMapstructMapper();
+  MapperInterface<Entity, Dto> getMapstructMapper();
 
-    JpaRepository<Entity, String> getRepository();
+  JpaRepository<Entity, String> getRepository();
 
-    BizException getNotFoundException();
+  BizException getNotFoundException();
 
-    Entity getEntity(String id);
+  Entity getEntity(String id);
 
-    Dto get(String id);
+  Dto get(String id);
 
-    Dto create(Dto creationDto);
+  Dto create(Dto creationDto);
 
-    Dto update(String id, Dto updateDto);
+  Dto update(String id, Dto updateDto);
 
-    void delete(String id);
+  void delete(String id);
 }

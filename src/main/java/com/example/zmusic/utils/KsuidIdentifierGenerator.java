@@ -7,8 +7,10 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 
 public class KsuidIdentifierGenerator implements IdentifierGenerator {
-    @Override
-    public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {
-        return KsuidUtils.generateKsuid();
-    }
+  @Override
+  public Serializable generate(
+      SharedSessionContractImplementor sharedSessionContractImplementor, Object o)
+      throws HibernateException {
+    return KsuidUtils.generateKsuid();
+  }
 }

@@ -22,38 +22,47 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.AUTH_LOGIN).permitAll()
-                .antMatchers(AuthenticationConfigConstants.WECHAT_URL).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
-                .exceptionHandling()
-                .accessDeniedHandler(new CustomAccessDeniedHandler())
-                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                .and()
-                // disable session creation on Spring Security
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors()
+        .and()
+        .csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.AUTH_LOGIN)
+        .permitAll()
+        .antMatchers(AuthenticationConfigConstants.WECHAT_URL)
+        .permitAll()
+        .antMatchers(AuthenticationConfigConstants.FILES_URL)
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
+        .exceptionHandling()
+        .accessDeniedHandler(new CustomAccessDeniedHandler())
+        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+        .and()
+        // disable session creation on Spring Security
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers("/swagger**/**")
-                .antMatchers("/webjars/**")
-                .antMatchers("/v3/**")
-                .antMatchers("/doc.html")
-                .antMatchers("/weixin/**")
-                .antMatchers("/hello");
-    }
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring()
+        .antMatchers("/swagger**/**")
+        .antMatchers("/webjars/**")
+        .antMatchers("/v3/**")
+        .antMatchers("/doc.html")
+        .antMatchers("/weixin/**")
+        .antMatchers("/hello");
+  }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
-    }
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userService);
+  }
 }

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 @ComponentScan(basePackages = {"com.example.zmusic", "cn.hutool.extra.spring"})
 public class ZmusicApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ZmusicApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(ZmusicApplication.class, args);
+  }
 }

@@ -26,81 +26,80 @@ import java.util.Objects;
 @EnableOpenApi
 public class SwaggerConfig {
 
-    @Bean
-    public Docket docket() {
-        return new Docket(DocumentationType.OAS_30)
-                .apiInfo(apiInfo()).enable(true)
-                .securityContexts(Collections.singletonList(securityContext()))
-                .securitySchemes(Collections.singletonList(apiKey()))
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.zmusic"))
-                .paths(PathSelectors.any())
-                .build();
-    }
+  @Bean
+  public Docket docket() {
+    return new Docket(DocumentationType.OAS_30)
+        .apiInfo(apiInfo())
+        .enable(true)
+        .securityContexts(Collections.singletonList(securityContext()))
+        .securitySchemes(Collections.singletonList(apiKey()))
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.example.zmusic"))
+        .paths(PathSelectors.any())
+        .build();
+  }
 
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
-    }
+  private ApiKey apiKey() {
+    return new ApiKey("Authorization", "Authorization", "header");
+  }
 
+  private SecurityContext securityContext() {
+    return SecurityContext.builder().securityReferences(defaultAuth()).build();
+  }
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
-    }
+  private List<SecurityReference> defaultAuth() {
+    AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+    AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+    authorizationScopes[0] = authorizationScope;
+    return Collections.singletonList(new SecurityReference("Authorization", authorizationScopes));
+  }
 
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Collections.singletonList(new SecurityReference("Authorization", authorizationScopes));
-    }
+  private ApiInfo apiInfo() {
+    return new ApiInfoBuilder()
+        .title("ZMUSIC 接口文档")
+        .description("ZMUSIC 接口文档")
+        .contact(new Contact("ZHENG", "localhost:8080", "1582090156@qq.com"))
+        .version("1.0.0")
+        .build();
+  }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("ZMUSIC 接口文档")
-                .description("ZMUSIC 接口文档")
-                .contact(new Contact("ZHENG", "localhost:8080", "1582090156@qq.com"))
-                .version("1.0.0")
-                .build();
-    }
+  /**
+   * 解决springboot2.6 和springfox不兼容问题
+   *
+   * @return /
+   */
+  @Bean
+  public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
+    return new BeanPostProcessor() {
 
+      @Override
+      public Object postProcessAfterInitialization(Object bean, String beanName)
+          throws BeansException {
+        if (bean instanceof WebMvcRequestHandlerProvider
+            || bean instanceof WebFluxRequestHandlerProvider) {
+          customizeSpringfoxHandlerMappings(getHandlerMappings(bean));
+        }
+        return bean;
+      }
 
-    /**
-     * 解决springboot2.6 和springfox不兼容问题
-     *
-     * @return /
-     */
-    @Bean
-    public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
-        return new BeanPostProcessor() {
+      private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(
+          List<T> mappings) {
+        List<T> copy =
+            mappings.stream().filter(mapping -> mapping.getPatternParser() == null).toList();
+        mappings.clear();
+        mappings.addAll(copy);
+      }
 
-            @Override
-            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-                if (bean instanceof WebMvcRequestHandlerProvider || bean instanceof WebFluxRequestHandlerProvider) {
-                    customizeSpringfoxHandlerMappings(getHandlerMappings(bean));
-                }
-                return bean;
-            }
-
-            private <T extends RequestMappingInfoHandlerMapping> void customizeSpringfoxHandlerMappings(List<T> mappings) {
-                List<T> copy = mappings.stream()
-                        .filter(mapping -> mapping.getPatternParser() == null)
-                        .toList();
-                mappings.clear();
-                mappings.addAll(copy);
-            }
-
-            @SuppressWarnings("unchecked")
-            private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
-                try {
-                    Field field = ReflectionUtils.findField(bean.getClass(), "handlerMappings");
-                    Objects.requireNonNull(field).setAccessible(true);
-                    return (List<RequestMappingInfoHandlerMapping>) field.get(bean);
-                } catch (IllegalArgumentException | IllegalAccessException e) {
-                    throw new IllegalStateException(e);
-                }
-            }
-        };
-    }
+      @SuppressWarnings("unchecked")
+      private List<RequestMappingInfoHandlerMapping> getHandlerMappings(Object bean) {
+        try {
+          Field field = ReflectionUtils.findField(bean.getClass(), "handlerMappings");
+          Objects.requireNonNull(field).setAccessible(true);
+          return (List<RequestMappingInfoHandlerMapping>) field.get(bean);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+          throw new IllegalStateException(e);
+        }
+      }
+    };
+  }
 }

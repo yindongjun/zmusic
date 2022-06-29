@@ -10,22 +10,23 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class FileDto extends BaseDto {
-    private String name;
+  private String name;
 
-    private Long size;
+  private Long size;
 
-    private String fileKey;
+  private String fileKey;
 
-    private String ext;
+  private String ext;
 
-    private FileType type;
+  private String url;
 
-    private Storage storage;
+  private FileType type;
 
-    private FileStatus status;
+  private Storage storage;
 
-    protected User createUser;
+  private FileStatus status;
 
-    private User updateUser;
+  protected User createUser;
 
+  private User updateUser;
 }

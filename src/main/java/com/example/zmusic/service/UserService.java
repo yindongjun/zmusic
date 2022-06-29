@@ -2,34 +2,33 @@ package com.example.zmusic.service;
 
 import com.example.zmusic.dto.LoginDto;
 import com.example.zmusic.dto.UserDto;
+import com.example.zmusic.dto.UserSearchFilter;
+import com.example.zmusic.entity.User;
 import com.example.zmusic.request.TokenCreateRequest;
-import com.example.zmusic.request.UserCreateRequest;
-import com.example.zmusic.request.UserUpdateRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
+public interface UserService extends UserDetailsService, GeneralService<User, UserDto> {
+  UserDto getByUsername(String username);
 
-    UserDto get(String id);
+  Page<UserDto> search(UserSearchFilter filter);
 
-    UserDto getByUsername(String username);
+  LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
 
-    Page<UserDto> search(Pageable pageable);
+  UserDto getCurrentUser();
 
-    List<UserDto> list();
+  void lock(String id);
 
-    UserDto create(UserCreateRequest userCreateRequest);
+  void unlock(String id);
 
-    UserDto update(String id, UserUpdateRequest userUpdateRequest);
+  void enable(String id);
 
-    void delete(String id);
+  void disable(String id);
 
-    LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
+  void updateRoles(String id, List<String> roleIds);
 
-    UserDto getCurrentUser();
-
+  void updatePassword(String id, String password, String confirmPassword);
 }

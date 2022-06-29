@@ -6,15 +6,17 @@ import lombok.Data;
 
 @Data
 public class StorageDto {
-    private String name;
+  private String name;
 
-    private Long size;
+  private Long size;
 
-    private String fileKey;
+  private String fileKey;
 
-    private String ext;
+  private String ext;
 
-    private FileType type;
+  private String url;
 
-    private Storage storage;
+  private FileType type;
+
+  private Storage storage;
 }

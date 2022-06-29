@@ -1,6 +1,5 @@
 package com.example.zmusic.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,17 +17,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity extends AbstractId {
 
-    /**
-     * 创建时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @CreatedDate
-    protected LocalDateTime createdTime;
+  /** 创建时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @CreatedDate
+  protected LocalDateTime createdTime;
 
-    /**
-     * 更新时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @LastModifiedDate
-    protected LocalDateTime updateTime;
+  /** 更新时间 */
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @LastModifiedDate
+  protected LocalDateTime updateTime;
 }

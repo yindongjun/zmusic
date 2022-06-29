@@ -8,8 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * WeChatConfig:
- * 微信平台开发相关的配置文件
+ * WeChatConfig: 微信平台开发相关的配置文件
  *
  * @author jzheng
  * @since 2022/6/4 23:15
@@ -17,22 +16,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WeChatConfig {
 
-    @Value("${wechat.mp.app-id}")
-    private String appId;
+  @Value("${wechat.mp.app-id}")
+  private String appId;
 
-    @Value("${wechat.mp.app-secret}")
-    private String appSecret;
+  @Value("${wechat.mp.app-secret}")
+  private String appSecret;
 
+  @Bean
+  public WxMpService wxMpService() {
+    WxMpServiceImpl wxMpService = new WxMpServiceImpl();
 
-    @Bean
-    public WxMpService wxMpService() {
-        WxMpServiceImpl wxMpService = new WxMpServiceImpl();
+    WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
+    config.setAppId(appId);
+    config.setSecret(appSecret);
 
-        WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
-        config.setAppId(appId);
-        config.setSecret(appSecret);
-
-        wxMpService.setWxMpConfigStorage(config);
-        return wxMpService;
-    }
+    wxMpService.setWxMpConfigStorage(config);
+    return wxMpService;
+  }
 }
