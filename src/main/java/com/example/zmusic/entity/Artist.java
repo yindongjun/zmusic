@@ -12,22 +12,22 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Artist extends TraceableEntity {
-    private String name;
+  private String name;
 
-    private String remark;
+  private String remark;
 
-    // TODO: 歌手无需展示全部的音乐, 需要进行分页
-    @ManyToMany
-    @JoinTable(name = "artist_music",
-            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "music_id", referencedColumnName = "id")
-    )
-    private List<Music> musics = new ArrayList<>();
+  // TODO: 歌手无需展示全部的音乐, 需要进行分页
+  @ManyToMany
+  @JoinTable(
+      name = "artist_music",
+      joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "music_id", referencedColumnName = "id"))
+  private List<Music> musics = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
-    private ArtistStatus status;
+  @Enumerated(EnumType.STRING)
+  private ArtistStatus status;
 
-    @OneToOne
-    @JoinColumn(name = "cover_id", referencedColumnName = "id")
-    private File cover;
+  @OneToOne
+  @JoinColumn(name = "cover_id", referencedColumnName = "id")
+  private File cover;
 }

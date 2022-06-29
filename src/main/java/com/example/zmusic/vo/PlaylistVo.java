@@ -1,27 +1,26 @@
 package com.example.zmusic.vo;
 
-import com.example.zmusic.dto.UserDto;
-import com.example.zmusic.entity.File;
-import com.example.zmusic.entity.Music;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
+import com.example.zmusic.enums.PlaylistStatus;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class PlaylistVo extends BaseVo {
 
-    private String name;
+  private String name;
 
-    private String description;
+  private String description;
 
-    private File cover;
+  private FileVo cover;
 
-    private List<Music> musicList = new ArrayList<>();
+  private PlaylistStatus status = PlaylistStatus.DRAFT;
 
-    private UserDto createUser;
+  private List<MusicVo> musicList = new ArrayList<>();
 
-    private UserDto updateUser;
+  private UserVo createUser;
+
+  private UserVo updateUser;
 }

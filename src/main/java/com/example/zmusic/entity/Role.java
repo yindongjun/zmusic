@@ -3,9 +3,9 @@ package com.example.zmusic.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,19 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Role extends BaseEntity {
-    /**
-     * 角色名称
-     */
-    private String name;
+  /** 标识 */
+  private String name;
 
-    /**
-     * 角色标识
-     */
-    private String title;
+  /** 名称 */
+  private String title;
 
-
-    @ManyToMany(mappedBy = "roles", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "roles")
-    private List<User> users = new ArrayList<>();
+  @ManyToMany
+  @JoinTable(
+      name = "user_role",
+      joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+  @JsonIgnoreProperties(value = "roles")
+  private List<User> users = new ArrayList<>();
 }
-

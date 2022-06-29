@@ -9,21 +9,18 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = {EnumExistValidator.class})
 @Documented
 public @interface EnumExist {
-    String message() default "";
+  String message() default "";
 
+  Class<?>[] groups() default {};
 
-    Class<?>[] groups() default {};
+  Class<? extends Payload>[] payload() default {};
 
+  Class<?>[] target() default {};
 
-    Class<? extends Payload>[] payload() default {};
-
-
-    Class<?>[] target() default {};
-
-    /**
-     * 允许的枚举
-     *
-     * @return /
-     */
-    Class<? extends Enum<?>> enumClass();
+  /**
+   * 允许的枚举
+   *
+   * @return /
+   */
+  Class<? extends Enum<?>> enumClass();
 }

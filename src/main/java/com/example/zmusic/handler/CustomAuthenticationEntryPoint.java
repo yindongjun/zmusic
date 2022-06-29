@@ -13,19 +13,24 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+  @Override
+  public void commence(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      AuthenticationException authException)
+      throws IOException, ServletException {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Cache-Control", "no-cache");
+    response.setContentType("application/json;charset=UTF-8");
+    response.setStatus(HttpStatus.UNAUTHORIZED.value());
 
-        ErrorResponse errorResp = ErrorResponse.builder()
-                .code(ExceptionType.UNAUTHORIZED.getCode())
-                .message(ExceptionType.UNAUTHORIZED.getMessage())
-                .build();
-        PrintWriter writer = response.getWriter();
-        writer.println(JSONUtil.toJsonStr(errorResp));
-        writer.flush();
-    }
+    ErrorResponse errorResp =
+        ErrorResponse.builder()
+            .code(ExceptionType.UNAUTHORIZED.getCode())
+            .message(ExceptionType.UNAUTHORIZED.getMessage())
+            .build();
+    PrintWriter writer = response.getWriter();
+    writer.println(JSONUtil.toJsonStr(errorResp));
+    writer.flush();
+  }
 }

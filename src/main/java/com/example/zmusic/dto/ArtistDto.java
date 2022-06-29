@@ -11,13 +11,13 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ArtistDto extends BaseDto {
-    private String name;
+  private String name;
 
-    private String remark;
+  private String remark;
 
-    private List<Music> musicList;
+  private List<Music> musicList;
 
-    private ArtistStatus status = ArtistStatus.DRAFT;
+  private ArtistStatus status = ArtistStatus.DRAFT;
 
-    private File cover;
+  private File cover;
 }
