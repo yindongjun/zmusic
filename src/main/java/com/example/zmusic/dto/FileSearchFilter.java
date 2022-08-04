@@ -9,11 +9,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class FileSearchFilter extends PageFilter {
-  private String name;
 
-  @EnumExist(enumClass = FileType.class, message = "文件类型错误")
-  private String type;
+    private String name;
 
-  @EnumExist(enumClass = FileStatus.class, message = "文件状态错误")
-  private String status;
+    @EnumExist(enumClass = FileType.class, message = "文件类型错误")
+    private String type;
+
+    @EnumExist(enumClass = FileStatus.class, message = "文件状态错误")
+    private String status;
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
   @Override
   public void commence(
       HttpServletRequest request,

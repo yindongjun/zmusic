@@ -11,13 +11,14 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ArtistVo extends BaseVo {
-  private String name;
 
-  private String remark;
+    private String name;
 
-  private List<Music> musicList;
+    private String remark;
 
-  private ArtistStatus status;
+    private List<Music> musicList;
 
-  private File cover;
+    private ArtistStatus status;
+
+    private File cover;
 }

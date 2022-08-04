@@ -21,56 +21,56 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "音乐管理")
 public class MusicController {
 
-  private final MusicService musicService;
+    private final MusicService musicService;
 
-  private final MusicMapper musicMapper;
+    private final MusicMapper musicMapper;
 
-  @GetMapping("/{id}")
-  @ApiOperation("获取音乐")
-  public MusicVo get(@PathVariable String id) {
-    MusicDto musicDto = musicService.get(id);
-    return musicMapper.toVo(musicDto);
-  }
+    @GetMapping("/{id}")
+    @ApiOperation("获取音乐")
+    public MusicVo get(@PathVariable String id) {
+        MusicDto musicDto = musicService.get(id);
+        return musicMapper.toVo(musicDto);
+    }
 
-  @GetMapping("/")
-  public Page<MusicVo> search(@Validated MusicSearchFilter musicSearchFilter) {
-    Page<MusicDto> musicDtoPage = musicService.search(musicSearchFilter);
-    return musicDtoPage.map(musicMapper::toVo);
-  }
+    @GetMapping("/")
+    public Page<MusicVo> search(@Validated MusicSearchFilter musicSearchFilter) {
+        Page<MusicDto> musicDtoPage = musicService.search(musicSearchFilter);
+        return musicDtoPage.map(musicMapper::toVo);
+    }
 
-  @PostMapping("/")
-  @PreAuthorize("hasRole('ADMIN')")
-  @ApiOperation("添加音乐")
-  public MusicVo create(@Validated @RequestBody MusicCreateRequest musicCreateRequest) {
-    MusicDto musicDto = musicService.create(musicCreateRequest);
-    return musicMapper.toVo(musicDto);
-  }
+    @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation("添加音乐")
+    public MusicVo create(@Validated @RequestBody MusicCreateRequest musicCreateRequest) {
+        MusicDto musicDto = musicService.create(musicCreateRequest);
+        return musicMapper.toVo(musicDto);
+    }
 
-  @PutMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
-  @ApiOperation("更新音乐")
-  public MusicVo update(
-      @PathVariable String id, @Validated @RequestBody MusicUpdateRequest musicUpdateRequest) {
-    MusicDto musicDto = musicService.update(id, musicUpdateRequest);
-    return musicMapper.toVo(musicDto);
-  }
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation("更新音乐")
+    public MusicVo update(
+            @PathVariable String id, @Validated @RequestBody MusicUpdateRequest musicUpdateRequest) {
+        MusicDto musicDto = musicService.update(id, musicUpdateRequest);
+        return musicMapper.toVo(musicDto);
+    }
 
-  @DeleteMapping("/{id}")
-  @PreAuthorize("hasRole('ADMIN')")
-  @ApiOperation("删除音乐")
-  public void delete(@PathVariable String id) {
-    musicService.delete(id);
-  }
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation("删除音乐")
+    public void delete(@PathVariable String id) {
+        musicService.delete(id);
+    }
 
-  @PutMapping("/{id}/publish")
-  @ApiOperation("上架音乐")
-  public void publish(@PathVariable String id) {
-    musicService.publish(id);
-  }
+    @PutMapping("/{id}/publish")
+    @ApiOperation("上架音乐")
+    public void publish(@PathVariable String id) {
+        musicService.publish(id);
+    }
 
-  @PutMapping("/{id}/close")
-  @ApiOperation("下架音乐")
-  public void close(@PathVariable String id) {
-    musicService.close(id);
-  }
+    @PutMapping("/{id}/close")
+    @ApiOperation("下架音乐")
+    public void close(@PathVariable String id) {
+        musicService.close(id);
+    }
 }

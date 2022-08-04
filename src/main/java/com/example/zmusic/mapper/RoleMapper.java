@@ -13,16 +13,17 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 import java.util.List;
 
 @Mapper(
-    componentModel = "spring",
-    builder = @Builder(disableBuilder = true),
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+        componentModel = "spring",
+        builder = @Builder(disableBuilder = true),
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface RoleMapper extends MapperInterface<Role, RoleDto> {
-  RoleDto toDto(RoleCreateRequest roleCreateRequest);
 
-  RoleDto toDto(RoleUpdateRequest roleUpdateRequest);
+    RoleDto toDto(RoleCreateRequest roleCreateRequest);
 
-  RoleVo toVo(RoleDto roleDto);
+    RoleDto toDto(RoleUpdateRequest roleUpdateRequest);
 
-  List<RoleVo> toVo(List<RoleDto> roleList);
+    RoleVo toVo(RoleDto roleDto);
+
+    List<RoleVo> toVo(List<RoleDto> roleList);
 }

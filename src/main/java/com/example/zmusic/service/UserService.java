@@ -12,23 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService extends UserDetailsService, GeneralService<User, UserDto> {
-  UserDto getByUsername(String username);
 
-  Page<UserDto> search(UserSearchFilter filter);
+    UserDto getByUsername(String username);
 
-  LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
+    Page<UserDto> search(UserSearchFilter filter);
 
-  UserDto getCurrentUser();
+    LoginDto login(TokenCreateRequest tokenCreateRequest, HttpServletRequest request);
 
-  void lock(String id);
+    UserDto getCurrentUser();
 
-  void unlock(String id);
+    void lock(String id);
 
-  void enable(String id);
+    void unlock(String id);
 
-  void disable(String id);
+    void enable(String id);
 
-  void updateRoles(String id, List<String> roleIds);
+    void disable(String id);
 
-  void updatePassword(String id, String password, String confirmPassword);
+    void updateRoles(String id, List<String> roleIds);
+
+    void updatePassword(String id, String password, String confirmPassword);
 }

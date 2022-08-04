@@ -22,21 +22,22 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "认证管理")
 public class AuthController {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  private final TokenMapper tokenMapper;
+    private final TokenMapper tokenMapper;
 
-  @PostMapping("/login")
-  @ApiOperation("创建令牌")
-  public TokenVo login(
-      @Validated @RequestBody TokenCreateRequest tokenCreateRequest, HttpServletRequest request) {
-    // check username and password
-    LoginDto loginDto = userService.login(tokenCreateRequest, request);
+    @PostMapping("/login")
+    @ApiOperation("创建令牌")
+    public TokenVo login(
+            @Validated @RequestBody TokenCreateRequest tokenCreateRequest, HttpServletRequest request) {
+        // check username and password
+        LoginDto loginDto = userService.login(tokenCreateRequest, request);
 
-    return tokenMapper.toVo(loginDto);
-  }
+        return tokenMapper.toVo(loginDto);
+    }
 
-  @PostMapping("/logout")
-  @ApiOperation("注销令牌")
-  public void logout() {}
+    @PostMapping("/logout")
+    @ApiOperation("注销令牌")
+    public void logout() {
+    }
 }

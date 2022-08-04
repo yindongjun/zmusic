@@ -13,24 +13,25 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
-  @Override
-  public void handle(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      AccessDeniedException accessDeniedException)
-      throws IOException, ServletException {
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Cache-Control", "no-cache");
-    response.setContentType("application/json;charset=UTF-8");
-    response.setStatus(HttpStatus.FORBIDDEN.value());
 
-    ErrorResponse errorResp =
-        ErrorResponse.builder()
-            .code(ExceptionType.FORBIDDEN.getCode())
-            .message(ExceptionType.FORBIDDEN.getMessage())
-            .build();
-    PrintWriter writer = response.getWriter();
-    writer.println(JSONUtil.toJsonStr(errorResp));
-    writer.flush();
-  }
+    @Override
+    public void handle(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AccessDeniedException accessDeniedException)
+            throws IOException, ServletException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpStatus.FORBIDDEN.value());
+
+        ErrorResponse errorResp =
+                ErrorResponse.builder()
+                        .code(ExceptionType.FORBIDDEN.getCode())
+                        .message(ExceptionType.FORBIDDEN.getMessage())
+                        .build();
+        PrintWriter writer = response.getWriter();
+        writer.println(JSONUtil.toJsonStr(errorResp));
+        writer.flush();
+    }
 }

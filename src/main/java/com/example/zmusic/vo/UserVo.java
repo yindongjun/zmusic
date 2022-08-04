@@ -12,15 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class UserVo extends BaseVo {
-  private String username;
 
-  private String nickname;
+    private String username;
 
-  private Gender gender;
+    private String nickname;
 
-  private Boolean locked;
+    private Gender gender;
 
-  private Boolean enabled;
+    private Boolean locked;
 
-  private List<RoleVo> roles = new ArrayList<>();
+    private Boolean enabled;
+
+    private List<RoleVo> roles = new ArrayList<>();
 }

@@ -3,6 +3,7 @@ package com.example.zmusic.service;
 import cn.hutool.core.io.FileUtil;
 import com.example.zmusic.ZmusicApplication;
 import com.example.zmusic.dto.ArtistDto;
+import com.example.zmusic.dto.ArtistSearchFilter;
 import com.example.zmusic.dto.FileDto;
 import com.example.zmusic.exception.BizException;
 import com.example.zmusic.mapper.ArtistMapper;
@@ -16,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +52,10 @@ class ArtistServiceTest {
 
     ArtistDto savedArtist = artistService.create(artistDto);
 
-    Page<ArtistDto> artistPage = artistService.search(PageRequest.of(0, 10));
+    ArtistSearchFilter artistSearchFilter = new ArtistSearchFilter();
+    artistSearchFilter.setPage(1);
+    artistSearchFilter.setSize(10);
+    Page<ArtistDto> artistPage = artistService.search(artistSearchFilter);
     Assertions.assertNotEquals(artistPage.getTotalElements(), 0);
   }
 

@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class RoleSearchFilter extends PageFilter {
-  private String name;
-  private String title;
+
+    private String name;
+    private String title;
 }

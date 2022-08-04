@@ -16,21 +16,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class WeChatConfig {
 
-  @Value("${wechat.mp.app-id}")
-  private String appId;
+    @Value("${wechat.mp.app-id}")
+    private String appId;
 
-  @Value("${wechat.mp.app-secret}")
-  private String appSecret;
+    @Value("${wechat.mp.app-secret}")
+    private String appSecret;
 
-  @Bean
-  public WxMpService wxMpService() {
-    WxMpServiceImpl wxMpService = new WxMpServiceImpl();
+    @Bean
+    public WxMpService wxMpService() {
+        WxMpServiceImpl wxMpService = new WxMpServiceImpl();
 
-    WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
-    config.setAppId(appId);
-    config.setSecret(appSecret);
+        WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
+        config.setAppId(appId);
+        config.setSecret(appSecret);
 
-    wxMpService.setWxMpConfigStorage(config);
-    return wxMpService;
-  }
+        wxMpService.setWxMpConfigStorage(config);
+        return wxMpService;
+    }
 }

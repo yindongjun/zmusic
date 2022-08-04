@@ -8,7 +8,8 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface RoleService extends GeneralService<Role, RoleDto> {
-  List<RoleDto> list();
 
-  Page<RoleDto> search(RoleSearchFilter roleSearchFilter);
+    List<RoleDto> list();
+
+    Page<RoleDto> search(RoleSearchFilter roleSearchFilter);
 }

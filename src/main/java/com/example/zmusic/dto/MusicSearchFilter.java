@@ -10,8 +10,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel
 public class MusicSearchFilter extends PageFilter {
-  private String name;
 
-  @EnumExist(enumClass = MusicStatus.class, message = "音乐状态不正确")
-  private String status;
+    private String name;
+
+    @EnumExist(enumClass = MusicStatus.class, message = "音乐状态不正确")
+    private String status;
 }

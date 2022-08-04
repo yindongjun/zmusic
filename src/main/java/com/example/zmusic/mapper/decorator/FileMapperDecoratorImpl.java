@@ -9,18 +9,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 public abstract class FileMapperDecoratorImpl implements FileMapper {
 
-  @Autowired
-  @Qualifier("delegate")
-  private FileMapper delegateFileMapper;
+    @Autowired
+    @Qualifier("delegate")
+    private FileMapper delegateFileMapper;
 
-  @Autowired private StorageService storageService;
+    @Autowired
+    private StorageService storageService;
 
-  @Override
-  public FileVo toVo(FileDto fileDto) {
-    FileVo fileVo = delegateFileMapper.toVo(fileDto);
-    // set url
-    String fileFullUrl = storageService.getFullUrl(fileDto);
-    fileVo.setUrl(fileFullUrl);
-    return fileVo;
-  }
+    @Override
+    public FileVo toVo(FileDto fileDto) {
+        FileVo fileVo = delegateFileMapper.toVo(fileDto);
+        // set url
+        String fileFullUrl = storageService.getFullUrl(fileDto);
+        fileVo.setUrl(fileFullUrl);
+        return fileVo;
+    }
 }

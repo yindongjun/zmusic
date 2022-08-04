@@ -30,7 +30,7 @@ public class SecurityAuditorAware implements AuditorAware<User> {
         if (user instanceof UserDto u) {
             return Optional.of(userMapper.toEntity(u));
         } else if (user instanceof User u) {
-            return  Optional.of(u);
+            return Optional.of(u);
         }
 
         return Optional.empty();

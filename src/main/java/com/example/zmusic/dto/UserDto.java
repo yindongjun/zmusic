@@ -11,27 +11,28 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UserDto extends BaseDto {
-  private String username;
 
-  private String nickname;
+    private String username;
 
-  private String password;
+    private String nickname;
 
-  private String confirmPassword;
+    private String password;
 
-  private Gender gender;
+    private String confirmPassword;
 
-  private List<RoleDto> roles;
+    private Gender gender;
 
-  private Boolean locked;
+    private List<RoleDto> roles;
 
-  private Boolean enabled;
+    private Boolean locked;
 
-  private String lastLoginIp;
+    private Boolean enabled;
 
-  private LocalDateTime lastLoginTime;
+    private String lastLoginIp;
 
-  protected User createUser;
+    private LocalDateTime lastLoginTime;
 
-  protected User updateUser;
+    protected User createUser;
+
+    protected User updateUser;
 }

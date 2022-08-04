@@ -8,7 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class RoleDto extends BaseDto {
-  private String name;
 
-  private String title;
+    private String name;
+
+    private String title;
 }

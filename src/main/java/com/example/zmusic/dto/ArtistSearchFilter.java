@@ -8,8 +8,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ArtistSearchFilter extends PageFilter {
-  private String name;
 
-  @EnumExist(enumClass = ArtistStatus.class)
-  private String status;
+    private String name;
+
+    @EnumExist(enumClass = ArtistStatus.class)
+    private String status;
 }

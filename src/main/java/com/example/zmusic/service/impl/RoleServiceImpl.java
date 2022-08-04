@@ -28,81 +28,81 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class RoleServiceImpl extends SimpleGeneralServiceImpl<Role, RoleDto>
-    implements RoleService {
+        implements RoleService {
 
-  private final RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-  private final RoleMapper roleMapper;
+    private final RoleMapper roleMapper;
 
-  @Override
-  public List<RoleDto> list() {
-    return roleRepository.findAll().stream().map(roleMapper::toDto).toList();
-  }
-
-  @Override
-  public Page<RoleDto> search(RoleSearchFilter roleSearchFilter) {
-    Pageable pageable = roleSearchFilter.toPageable();
-
-    RoleSpecification specification = new RoleSpecification();
-    if (StrUtil.isNotBlank(roleSearchFilter.getName())) {
-      specification.add(
-          new SearchCriteria("name", roleSearchFilter.getName(), SearchOperation.MATCH));
+    @Override
+    public List<RoleDto> list() {
+        return roleRepository.findAll().stream().map(roleMapper::toDto).toList();
     }
 
-    if (StrUtil.isNotBlank(roleSearchFilter.getTitle())) {
-      specification.add(
-          new SearchCriteria("title", roleSearchFilter.getTitle(), SearchOperation.MATCH));
+    @Override
+    public Page<RoleDto> search(RoleSearchFilter roleSearchFilter) {
+        Pageable pageable = roleSearchFilter.toPageable();
+
+        RoleSpecification specification = new RoleSpecification();
+        if (StrUtil.isNotBlank(roleSearchFilter.getName())) {
+            specification.add(
+                    new SearchCriteria("name", roleSearchFilter.getName(), SearchOperation.MATCH));
+        }
+
+        if (StrUtil.isNotBlank(roleSearchFilter.getTitle())) {
+            specification.add(
+                    new SearchCriteria("title", roleSearchFilter.getTitle(), SearchOperation.MATCH));
+        }
+
+        Page<Role> page = roleRepository.findAll(specification, pageable);
+        return page.map(roleMapper::toDto);
     }
 
-    Page<Role> page = roleRepository.findAll(specification, pageable);
-    return page.map(roleMapper::toDto);
-  }
+    @Override
+    @Transactional
+    public RoleDto create(RoleDto dto) {
+        // Validate
+        checkRoleNameDuplicate(dto);
 
-  @Override
-  @Transactional
-  public RoleDto create(RoleDto dto) {
-    // Validate
-    checkRoleNameDuplicate(dto);
+        // Create
+        return super.create(dto);
+    }
 
-    // Create
-    return super.create(dto);
-  }
+    @Override
+    @Transactional
+    public RoleDto update(String id, RoleDto dto) {
+        // Validate
+        dto.setId(id);
+        checkRoleNameDuplicate(dto);
 
-  @Override
-  @Transactional
-  public RoleDto update(String id, RoleDto dto) {
-    // Validate
-    dto.setId(id);
-    checkRoleNameDuplicate(dto);
+        // Update
+        return super.update(id, dto);
+    }
 
-    // Update
-    return super.update(id, dto);
-  }
+    private void checkRoleNameDuplicate(RoleDto dto) {
+        final String realId = Optional.ofNullable(dto.getId()).orElse("-1");
+        roleRepository
+                .findFirstByName(dto.getName())
+                .ifPresent(
+                        role -> {
+                            if (ObjectUtil.notEqual(role.getId(), realId)) {
+                                throw new BizException(ExceptionType.ROLE_TITLE_DUPLICATE);
+                            }
+                        });
+    }
 
-  private void checkRoleNameDuplicate(RoleDto dto) {
-    final String realId = Optional.ofNullable(dto.getId()).orElse("-1");
-    roleRepository
-        .findFirstByName(dto.getName())
-        .ifPresent(
-            role -> {
-              if (ObjectUtil.notEqual(role.getId(), realId)) {
-                throw new BizException(ExceptionType.ROLE_TITLE_DUPLICATE);
-              }
-            });
-  }
+    @Override
+    public MapperInterface<Role, RoleDto> getMapstructMapper() {
+        return roleMapper;
+    }
 
-  @Override
-  public MapperInterface<Role, RoleDto> getMapstructMapper() {
-    return roleMapper;
-  }
+    @Override
+    public JpaRepository<Role, String> getRepository() {
+        return roleRepository;
+    }
 
-  @Override
-  public JpaRepository<Role, String> getRepository() {
-    return roleRepository;
-  }
-
-  @Override
-  public BizException getNotFoundException() {
-    return new BizException(ExceptionType.ROLE_NOT_FOUND);
-  }
+    @Override
+    public BizException getNotFoundException() {
+        return new BizException(ExceptionType.ROLE_NOT_FOUND);
+    }
 }

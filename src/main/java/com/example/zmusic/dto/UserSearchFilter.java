@@ -8,5 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @ApiModel
 public class UserSearchFilter extends PageFilter {
-  private String username;
+
+    private String username;
 }

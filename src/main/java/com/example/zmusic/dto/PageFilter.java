@@ -10,19 +10,20 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class PageFilter {
-  @NotNull(message = "分页页码不能为空")
-  @Min(value = 1, message = "分页页码最小为 1")
-  protected Integer page;
 
-  @NotNull(message = "分页大小不能为空")
-  @Min(value = 1, message = "分页大小最小为 1")
-  protected Integer size;
+    @NotNull(message = "分页页码不能为空")
+    @Min(value = 1, message = "分页页码最小为 1")
+    protected Integer page;
 
-  protected String sort = "createdTime";
+    @NotNull(message = "分页大小不能为空")
+    @Min(value = 1, message = "分页大小最小为 1")
+    protected Integer size;
 
-  protected String direction = "ASC";
+    protected String sort = "createdTime";
 
-  public Pageable toPageable() {
-    return PageRequest.of(page - 1, size, Sort.Direction.fromString(direction), sort);
-  }
+    protected String direction = "ASC";
+
+    public Pageable toPageable() {
+        return PageRequest.of(page - 1, size, Sort.Direction.fromString(direction), sort);
+    }
 }

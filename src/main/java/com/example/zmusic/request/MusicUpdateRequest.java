@@ -13,12 +13,17 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Builder
 public class MusicUpdateRequest {
-  /** 音乐名称 */
-  @NotBlank(message = "音乐名称不能为空")
-  @Size(max = 64, message = "音乐名称最大长度为 64")
-  private String name;
 
-  /** 音乐简介 */
-  @Size(max = 255, message = "音乐简介最大长度为 255")
-  private String description;
+    /**
+     * 音乐名称
+     */
+    @NotBlank(message = "音乐名称不能为空")
+    @Size(max = 64, message = "音乐名称最大长度为 64")
+    private String name;
+
+    /**
+     * 音乐简介
+     */
+    @Size(max = 255, message = "音乐简介最大长度为 255")
+    private String description;
 }

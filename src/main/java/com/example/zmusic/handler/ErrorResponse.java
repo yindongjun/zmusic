@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ErrorResponse {
-  private Integer code;
-  private String message;
-  // private Object trace;
+
+    private Integer code;
+    private String message;
+    // private Object trace;
 }

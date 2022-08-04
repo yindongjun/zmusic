@@ -7,17 +7,18 @@ import com.example.zmusic.request.MusicUpdateRequest;
 import org.springframework.data.domain.Page;
 
 public interface MusicService {
-  MusicDto create(MusicCreateRequest musicCreateRequest);
 
-  MusicDto update(String id, MusicUpdateRequest musicUpdateRequest);
+    MusicDto create(MusicCreateRequest musicCreateRequest);
 
-  void delete(String id);
+    MusicDto update(String id, MusicUpdateRequest musicUpdateRequest);
 
-  MusicDto get(String id);
+    void delete(String id);
 
-  Page<MusicDto> search(MusicSearchFilter filter);
+    MusicDto get(String id);
 
-  void publish(String id);
+    Page<MusicDto> search(MusicSearchFilter filter);
 
-  void close(String id);
+    void publish(String id);
+
+    void close(String id);
 }

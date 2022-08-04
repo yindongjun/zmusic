@@ -6,9 +6,10 @@ import java.time.LocalDateTime;
 
 @Data
 public abstract class BaseDto {
-  protected String id;
 
-  protected LocalDateTime createdTime;
+    protected String id;
 
-  protected LocalDateTime updateTime;
+    protected LocalDateTime createdTime;
+
+    protected LocalDateTime updateTime;
 }

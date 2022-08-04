@@ -13,11 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class MusicVo extends BaseVo {
-  private String name;
 
-  private MusicStatus status;
+    private String name;
 
-  private List<Artist> artistList = new ArrayList<>();
+    private MusicStatus status;
 
-  private String description;
+    private List<Artist> artistList = new ArrayList<>();
+
+    private String description;
 }

@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SearchCriteria {
-  private String key;
-  private Object value;
-  private SearchOperation operation;
+
+    private String key;
+    private Object value;
+    private SearchOperation operation;
 }

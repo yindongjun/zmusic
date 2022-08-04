@@ -6,20 +6,21 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class EnumExistValidator implements ConstraintValidator<EnumExist, String> {
-  private Class<? extends Enum<?>> enumClass;
 
-  @Override
-  public void initialize(EnumExist enumExist) {
-    enumClass = enumExist.enumClass();
-  }
+    private Class<? extends Enum<?>> enumClass;
 
-  @Override
-  public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-    if (value == null) {
-      return true;
+    @Override
+    public void initialize(EnumExist enumExist) {
+        enumClass = enumExist.enumClass();
     }
 
-    Enum<?>[] enums = enumClass.getEnumConstants();
-    return Arrays.stream(enums).map(Enum::name).anyMatch(name -> Objects.equals(name, value));
-  }
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+        if (value == null) {
+            return true;
+        }
+
+        Enum<?>[] enums = enumClass.getEnumConstants();
+        return Arrays.stream(enums).map(Enum::name).anyMatch(name -> Objects.equals(name, value));
+    }
 }

@@ -8,17 +8,17 @@ import com.example.zmusic.vo.ArtistVo;
 import org.mapstruct.*;
 
 @Mapper(
-    componentModel = "spring",
-    builder = @Builder(disableBuilder = true),
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
+        componentModel = "spring",
+        builder = @Builder(disableBuilder = true),
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface ArtistMapper extends MapperInterface<Artist, ArtistDto> {
 
-  @Mapping(source = "coverId", target = "cover.id")
-  ArtistDto toDto(ArtistCreateRequest artistCreateRequest);
+    @Mapping(source = "coverId", target = "cover.id")
+    ArtistDto toDto(ArtistCreateRequest artistCreateRequest);
 
-  @Mapping(source = "coverId", target = "cover.id")
-  ArtistDto toDto(ArtistUpdateRequest artistUpdateRequest);
+    @Mapping(source = "coverId", target = "cover.id")
+    ArtistDto toDto(ArtistUpdateRequest artistUpdateRequest);
 
-  ArtistVo toVo(ArtistDto artistDto);
+    ArtistVo toVo(ArtistDto artistDto);
 }

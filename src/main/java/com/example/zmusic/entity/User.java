@@ -24,72 +24,88 @@ import java.util.stream.Collectors;
 @Entity
 public class User extends BaseEntity implements UserDetails {
 
-  /** 用户名 */
-  private String username;
+    /**
+     * 用户名
+     */
+    private String username;
 
-  /** 用户昵称 */
-  private String nickname;
+    /**
+     * 用户昵称
+     */
+    private String nickname;
 
-  /** 加密后的密码 */
-  private String password;
+    /**
+     * 加密后的密码
+     */
+    private String password;
 
-  /** 性别 */
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+    /**
+     * 性别
+     */
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  /** 是否锁定, 1-是、0-否 */
-  private Boolean locked = false;
+    /**
+     * 是否锁定, 1-是、0-否
+     */
+    private Boolean locked = false;
 
-  /** 是否可用, 1-是、0-否 */
-  private Boolean enabled = true;
+    /**
+     * 是否可用, 1-是、0-否
+     */
+    private Boolean enabled = true;
 
-  /** 最后登录IP */
-  private String lastLoginIp;
+    /**
+     * 最后登录IP
+     */
+    private String lastLoginIp;
 
-  /** 最后登录时间 */
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  private LocalDateTime lastLoginTime;
+    /**
+     * 最后登录时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime lastLoginTime;
 
-  @ManyToMany
-  @JoinTable(
-      name = "user_role",
-      joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-  @JsonIgnoreProperties(value = "users")
-  private List<Role> roles = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JsonIgnoreProperties(value = "users")
+    private List<Role> roles = new ArrayList<>();
 
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles.stream()
-        .map(role -> new SimpleGrantedAuthority(role.getName()))
-        .collect(Collectors.toList());
-  }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
+    }
 
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isAccountNonLocked() {
-    return !getLocked();
-  }
+    @Override
+    public boolean isAccountNonLocked() {
+        return !getLocked();
+    }
 
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
 
-  @Override
-  public boolean isEnabled() {
-    return getEnabled();
-  }
+    @Override
+    public boolean isEnabled() {
+        return getEnabled();
+    }
 
-  public boolean locked() {
-    return this.locked;
-  }
+    public boolean locked() {
+        return this.locked;
+    }
 
-  public boolean disabled() {
-    return !this.enabled;
-  }
+    public boolean disabled() {
+        return !this.enabled;
+    }
 }

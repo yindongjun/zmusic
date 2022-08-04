@@ -17,61 +17,61 @@ import java.util.List;
 @Slf4j
 public class GlobalExceptionHandler {
 
-  @ExceptionHandler(BizException.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorResponse bizExceptionHandler(BizException e) {
-    return ErrorResponse.builder()
-        .code(e.getCode())
-        .message(e.getMessage())
-        // .trace(e.getStackTrace())
-        .build();
-  }
+    @ExceptionHandler(BizException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse bizExceptionHandler(BizException e) {
+        return ErrorResponse.builder()
+                .code(e.getCode())
+                .message(e.getMessage())
+                // .trace(e.getStackTrace())
+                .build();
+    }
 
-  @ExceptionHandler(AccessDeniedException.class)
-  @ResponseStatus(HttpStatus.FORBIDDEN)
-  public ErrorResponse accessDeniedExceptionHandler(AccessDeniedException e) {
-    return ErrorResponse.builder()
-        .code(ExceptionType.FORBIDDEN.getCode())
-        .message(ExceptionType.FORBIDDEN.getMessage())
-        // .trace(e.getStackTrace())
-        .build();
-  }
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse accessDeniedExceptionHandler(AccessDeniedException e) {
+        return ErrorResponse.builder()
+                .code(ExceptionType.FORBIDDEN.getCode())
+                .message(ExceptionType.FORBIDDEN.getMessage())
+                // .trace(e.getStackTrace())
+                .build();
+    }
 
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public List<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
-    return e.getBindingResult().getAllErrors().stream()
-        .map(
-            error ->
-                ErrorResponse.builder()
-                    .code(ExceptionType.BAD_REQUEST.getCode())
-                    .message(error.getDefaultMessage())
-                    .build())
-        .toList();
-  }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+        return e.getBindingResult().getAllErrors().stream()
+                .map(
+                        error ->
+                                ErrorResponse.builder()
+                                        .code(ExceptionType.BAD_REQUEST.getCode())
+                                        .message(error.getDefaultMessage())
+                                        .build())
+                .toList();
+    }
 
-  @ExceptionHandler(BindException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public List<ErrorResponse> methodArgumentNotValidException(BindException e) {
-    log.error(e.getMessage());
-    return e.getBindingResult().getAllErrors().stream()
-        .map(
-            error ->
-                ErrorResponse.builder()
-                    .code(ExceptionType.BAD_REQUEST.getCode())
-                    .message(error.getDefaultMessage())
-                    .build())
-        .toList();
-  }
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public List<ErrorResponse> methodArgumentNotValidException(BindException e) {
+        log.error(e.getMessage());
+        return e.getBindingResult().getAllErrors().stream()
+                .map(
+                        error ->
+                                ErrorResponse.builder()
+                                        .code(ExceptionType.BAD_REQUEST.getCode())
+                                        .message(error.getDefaultMessage())
+                                        .build())
+                .toList();
+    }
 
-  @ExceptionHandler(Exception.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ErrorResponse exceptionHandler(Exception e) {
-    log.error(e.getMessage());
-    return ErrorResponse.builder()
-        .code(ExceptionType.INNER_ERROR.getCode())
-        .message(ExceptionType.INNER_ERROR.getMessage())
-        // .trace(e.getStackTrace())
-        .build();
-  }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse exceptionHandler(Exception e) {
+        log.error(e.getMessage());
+        return ErrorResponse.builder()
+                .code(ExceptionType.INNER_ERROR.getCode())
+                .message(ExceptionType.INNER_ERROR.getMessage())
+                // .trace(e.getStackTrace())
+                .build();
+    }
 }

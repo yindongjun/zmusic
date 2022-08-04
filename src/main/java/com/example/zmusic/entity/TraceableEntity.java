@@ -18,23 +18,27 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class TraceableEntity extends AbstractId {
 
-  /** 创建时间 */
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @CreatedDate
-  protected LocalDateTime createdTime;
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreatedDate
+    protected LocalDateTime createdTime;
 
-  /** 更新时间 */
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  @LastModifiedDate
-  protected LocalDateTime updateTime;
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @LastModifiedDate
+    protected LocalDateTime updateTime;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "create_by_user_id", referencedColumnName = "id")
-  @CreatedBy
-  protected User createUser;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "create_by_user_id", referencedColumnName = "id")
+    @CreatedBy
+    protected User createUser;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "update_by_user_id", referencedColumnName = "id")
-  @LastModifiedBy
-  protected User updateUser;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "update_by_user_id", referencedColumnName = "id")
+    @LastModifiedBy
+    protected User updateUser;
 }

@@ -25,76 +25,76 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MusicServiceImpl implements MusicService {
 
-  private final MusicMapper musicMapper;
+    private final MusicMapper musicMapper;
 
-  private final MusicRepository musicRepository;
+    private final MusicRepository musicRepository;
 
-  private Music getEntityById(String id) {
-    return musicRepository
-        .findById(id)
-        .orElseThrow(() -> new BizException(ExceptionType.NOT_FOUND));
-  }
-
-  @Override
-  public MusicDto create(MusicCreateRequest musicCreateRequest) {
-    Music music = musicMapper.createEntity(musicCreateRequest);
-    preInsert(music);
-    Music savedMusic = musicRepository.save(music);
-    return musicMapper.toDto(savedMusic);
-  }
-
-  private void preInsert(Music music) {
-    music.setStatus(MusicStatus.DRAFT);
-  }
-
-  @Override
-  public MusicDto update(String id, MusicUpdateRequest musicUpdateRequest) {
-    Music music = this.getEntityById(id);
-    musicMapper.updateEntity(musicUpdateRequest, music);
-    Music musicUpdated = musicRepository.save(music);
-    return musicMapper.toDto(musicUpdated);
-  }
-
-  @Override
-  public void delete(String id) {
-    musicRepository.deleteById(id);
-  }
-
-  @Override
-  public MusicDto get(String id) {
-    return musicMapper.toDto(this.getEntityById(id));
-  }
-
-  @Override
-  public Page<MusicDto> search(MusicSearchFilter filter) {
-    Pageable pageable = filter.toPageable();
-
-    MusicSpecification specification = new MusicSpecification();
-
-    if (StrUtil.isNotEmpty(filter.getName())) {
-      specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+    private Music getEntityById(String id) {
+        return musicRepository
+                .findById(id)
+                .orElseThrow(() -> new BizException(ExceptionType.NOT_FOUND));
     }
 
-    if (ObjectUtil.isNotNull(filter.getStatus())) {
-      specification.add(
-          new SearchCriteria(
-              "status", MusicStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+    @Override
+    public MusicDto create(MusicCreateRequest musicCreateRequest) {
+        Music music = musicMapper.createEntity(musicCreateRequest);
+        preInsert(music);
+        Music savedMusic = musicRepository.save(music);
+        return musicMapper.toDto(savedMusic);
     }
 
-    return musicRepository.findAll(specification, pageable).map(musicMapper::toDto);
-  }
+    private void preInsert(Music music) {
+        music.setStatus(MusicStatus.DRAFT);
+    }
 
-  @Override
-  public void publish(String id) {
-    Music music = getEntityById(id);
-    music.setStatus(MusicStatus.PUBLISHED);
-    musicRepository.save(music);
-  }
+    @Override
+    public MusicDto update(String id, MusicUpdateRequest musicUpdateRequest) {
+        Music music = this.getEntityById(id);
+        musicMapper.updateEntity(musicUpdateRequest, music);
+        Music musicUpdated = musicRepository.save(music);
+        return musicMapper.toDto(musicUpdated);
+    }
 
-  @Override
-  public void close(String id) {
-    Music music = getEntityById(id);
-    music.setStatus(MusicStatus.CLOSED);
-    musicRepository.save(music);
-  }
+    @Override
+    public void delete(String id) {
+        musicRepository.deleteById(id);
+    }
+
+    @Override
+    public MusicDto get(String id) {
+        return musicMapper.toDto(this.getEntityById(id));
+    }
+
+    @Override
+    public Page<MusicDto> search(MusicSearchFilter filter) {
+        Pageable pageable = filter.toPageable();
+
+        MusicSpecification specification = new MusicSpecification();
+
+        if (StrUtil.isNotEmpty(filter.getName())) {
+            specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+        }
+
+        if (ObjectUtil.isNotNull(filter.getStatus())) {
+            specification.add(
+                    new SearchCriteria(
+                            "status", MusicStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+        }
+
+        return musicRepository.findAll(specification, pageable).map(musicMapper::toDto);
+    }
+
+    @Override
+    public void publish(String id) {
+        Music music = getEntityById(id);
+        music.setStatus(MusicStatus.PUBLISHED);
+        musicRepository.save(music);
+    }
+
+    @Override
+    public void close(String id) {
+        Music music = getEntityById(id);
+        music.setStatus(MusicStatus.CLOSED);
+        musicRepository.save(music);
+    }
 }

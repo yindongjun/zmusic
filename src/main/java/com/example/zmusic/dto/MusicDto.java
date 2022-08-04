@@ -17,17 +17,17 @@ import java.util.List;
 @Builder
 public class MusicDto {
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  private MusicStatus status;
+    private MusicStatus status;
 
-  private String description;
+    private String description;
 
-  private List<Artist> artistList = new ArrayList<>();
+    private List<Artist> artistList = new ArrayList<>();
 
-  private LocalDateTime createdTime;
+    private LocalDateTime createdTime;
 
-  private LocalDateTime updateTime;
+    private LocalDateTime updateTime;
 }

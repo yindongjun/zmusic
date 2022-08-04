@@ -5,9 +5,10 @@ import com.example.zmusic.entity.AbstractId;
 import org.mapstruct.MappingTarget;
 
 public interface MapperInterface<Entity extends AbstractId, Dto extends BaseDto> {
-  Entity toEntity(Dto dto);
 
-  void updateEntity(Dto dto, @MappingTarget Entity entity);
+    Entity toEntity(Dto dto);
 
-  Dto toDto(Entity entity);
+    void updateEntity(Dto dto, @MappingTarget Entity entity);
+
+    Dto toDto(Entity entity);
 }

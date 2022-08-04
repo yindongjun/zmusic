@@ -11,16 +11,17 @@ import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(
-    componentModel = "spring",
-    uses = {UserMapper.class, FileMapper.class, MusicMapper.class},
-    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+        componentModel = "spring",
+        uses = {UserMapper.class, FileMapper.class, MusicMapper.class},
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface PlaylistMapper extends MapperInterface<Playlist, PlaylistDto> {
-  PlaylistVo toVo(PlaylistDto playlistDto);
 
-  @Mapping(source = "coverId", target = "cover.id")
-  PlaylistDto toDto(PlaylistCreateRequest playlistCreateRequest);
+    PlaylistVo toVo(PlaylistDto playlistDto);
 
-  @Mapping(source = "coverId", target = "cover.id")
-  PlaylistDto toDto(PlaylistUpdateRequest playlistUpdateRequest);
+    @Mapping(source = "coverId", target = "cover.id")
+    PlaylistDto toDto(PlaylistCreateRequest playlistCreateRequest);
+
+    @Mapping(source = "coverId", target = "cover.id")
+    PlaylistDto toDto(PlaylistUpdateRequest playlistUpdateRequest);
 }

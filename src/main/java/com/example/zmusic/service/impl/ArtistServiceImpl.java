@@ -25,42 +25,42 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ArtistServiceImpl extends SimpleGeneralServiceImpl<Artist, ArtistDto>
-    implements ArtistService {
+        implements ArtistService {
 
-  private final ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository;
 
-  private final ArtistMapper artistMapper;
+    private final ArtistMapper artistMapper;
 
-  @Override
-  public MapperInterface<Artist, ArtistDto> getMapstructMapper() {
-    return artistMapper;
-  }
-
-  @Override
-  public JpaRepository<Artist, String> getRepository() {
-    return artistRepository;
-  }
-
-  @Override
-  public BizException getNotFoundException() {
-    return new BizException(ExceptionType.ARTIST_NOT_FOUND);
-  }
-
-  @Override
-  public Page<ArtistDto> search(ArtistSearchFilter filter) {
-    Pageable pageable = filter.toPageable();
-
-    ArtistSpecification specification = new ArtistSpecification();
-    if (StrUtil.isNotBlank(filter.getName())) {
-      specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+    @Override
+    public MapperInterface<Artist, ArtistDto> getMapstructMapper() {
+        return artistMapper;
     }
 
-    if (StrUtil.isNotBlank(filter.getStatus())) {
-      specification.add(
-          new SearchCriteria(
-              "status", ArtistStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+    @Override
+    public JpaRepository<Artist, String> getRepository() {
+        return artistRepository;
     }
 
-    return artistRepository.findAll(specification, pageable).map(artistMapper::toDto);
-  }
+    @Override
+    public BizException getNotFoundException() {
+        return new BizException(ExceptionType.ARTIST_NOT_FOUND);
+    }
+
+    @Override
+    public Page<ArtistDto> search(ArtistSearchFilter filter) {
+        Pageable pageable = filter.toPageable();
+
+        ArtistSpecification specification = new ArtistSpecification();
+        if (StrUtil.isNotBlank(filter.getName())) {
+            specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+        }
+
+        if (StrUtil.isNotBlank(filter.getStatus())) {
+            specification.add(
+                    new SearchCriteria(
+                            "status", ArtistStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+        }
+
+        return artistRepository.findAll(specification, pageable).map(artistMapper::toDto);
+    }
 }

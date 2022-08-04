@@ -26,58 +26,58 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PlaylistServiceImpl extends SimpleGeneralServiceImpl<Playlist, PlaylistDto>
-    implements PlaylistService {
+        implements PlaylistService {
 
-  private final PlaylistMapper playlistMapper;
+    private final PlaylistMapper playlistMapper;
 
-  private final PlaylistRepository playlistRepository;
+    private final PlaylistRepository playlistRepository;
 
-  @Override
-  public Page<PlaylistDto> search(PlaylistSearchFilter filter) {
-    Pageable pageable = filter.toPageable();
+    @Override
+    public Page<PlaylistDto> search(PlaylistSearchFilter filter) {
+        Pageable pageable = filter.toPageable();
 
-    // Build Specification
-    PlaylistSpecification specification = new PlaylistSpecification();
-    if (StrUtil.isNotBlank(filter.getName())) {
-      specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+        // Build Specification
+        PlaylistSpecification specification = new PlaylistSpecification();
+        if (StrUtil.isNotBlank(filter.getName())) {
+            specification.add(new SearchCriteria("name", filter.getName(), SearchOperation.MATCH));
+        }
+
+        if (ObjectUtil.isNotNull(filter.getStatus())) {
+            specification.add(
+                    new SearchCriteria(
+                            "status", PlaylistStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+        }
+
+        return playlistRepository.findAll(specification, pageable).map(playlistMapper::toDto);
     }
 
-    if (ObjectUtil.isNotNull(filter.getStatus())) {
-      specification.add(
-          new SearchCriteria(
-              "status", PlaylistStatus.valueOf(filter.getStatus()), SearchOperation.EQUAL));
+    @Override
+    @Transactional
+    public void publish(String id) {
+        Playlist playlist = getEntity(id);
+        playlist.setStatus(PlaylistStatus.PUBLISHED);
+        playlistRepository.save(playlist);
     }
 
-    return playlistRepository.findAll(specification, pageable).map(playlistMapper::toDto);
-  }
+    @Override
+    public void close(String id) {
+        Playlist playlist = getEntity(id);
+        playlist.setStatus(PlaylistStatus.CLOSED);
+        playlistRepository.save(playlist);
+    }
 
-  @Override
-  @Transactional
-  public void publish(String id) {
-    Playlist playlist = getEntity(id);
-    playlist.setStatus(PlaylistStatus.PUBLISHED);
-    playlistRepository.save(playlist);
-  }
+    @Override
+    public MapperInterface<Playlist, PlaylistDto> getMapstructMapper() {
+        return playlistMapper;
+    }
 
-  @Override
-  public void close(String id) {
-    Playlist playlist = getEntity(id);
-    playlist.setStatus(PlaylistStatus.CLOSED);
-    playlistRepository.save(playlist);
-  }
+    @Override
+    public JpaRepository<Playlist, String> getRepository() {
+        return playlistRepository;
+    }
 
-  @Override
-  public MapperInterface<Playlist, PlaylistDto> getMapstructMapper() {
-    return playlistMapper;
-  }
-
-  @Override
-  public JpaRepository<Playlist, String> getRepository() {
-    return playlistRepository;
-  }
-
-  @Override
-  public BizException getNotFoundException() {
-    return new BizException(ExceptionType.PLAYLIST_NOT_FOUND);
-  }
+    @Override
+    public BizException getNotFoundException() {
+        return new BizException(ExceptionType.PLAYLIST_NOT_FOUND);
+    }
 }

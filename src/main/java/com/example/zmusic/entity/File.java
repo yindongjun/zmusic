@@ -14,22 +14,23 @@ import javax.persistence.Enumerated;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class File extends TraceableEntity {
-  private String name;
 
-  private Long size;
+    private String name;
 
-  private String fileKey;
+    private Long size;
 
-  private String ext;
+    private String fileKey;
 
-  private String url;
+    private String ext;
 
-  @Enumerated(EnumType.STRING)
-  private FileType type;
+    private String url;
 
-  @Enumerated(EnumType.STRING)
-  private Storage storage;
+    @Enumerated(EnumType.STRING)
+    private FileType type;
 
-  @Enumerated(EnumType.STRING)
-  private FileStatus status = FileStatus.UPLOADING;
+    @Enumerated(EnumType.STRING)
+    private Storage storage;
+
+    @Enumerated(EnumType.STRING)
+    private FileStatus status = FileStatus.UPLOADING;
 }

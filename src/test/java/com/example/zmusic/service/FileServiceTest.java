@@ -2,6 +2,7 @@ package com.example.zmusic.service;
 
 import cn.hutool.core.io.FileUtil;
 import com.example.zmusic.dto.FileDto;
+import com.example.zmusic.dto.FileSearchFilter;
 import com.example.zmusic.dto.UserDto;
 import com.example.zmusic.enums.Gender;
 import com.example.zmusic.exception.BizException;
@@ -21,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -99,7 +99,8 @@ class FileServiceTest {
       e.printStackTrace();
     }
 
-    Page<FileDto> page = fileService.search(PageRequest.of(0, 10));
+    FileSearchFilter fileSearchFilter = new FileSearchFilter();
+    Page<FileDto> page = fileService.search(fileSearchFilter);
     Assertions.assertNotEquals(0, page.getTotalElements());
   }
 

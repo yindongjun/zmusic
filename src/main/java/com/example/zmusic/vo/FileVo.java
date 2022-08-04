@@ -8,17 +8,18 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class FileVo extends BaseVo {
-  private String name;
 
-  private Long size;
+    private String name;
 
-  private String fileKey;
+    private Long size;
 
-  private String ext;
+    private String fileKey;
 
-  private String url;
+    private String ext;
 
-  private FileType type;
+    private String url;
 
-  private FileStatus status;
+    private FileType type;
+
+    private FileStatus status;
 }

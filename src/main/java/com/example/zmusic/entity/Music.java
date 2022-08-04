@@ -15,20 +15,27 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Music extends BaseEntity {
-  /** 音乐名称 */
-  private String name;
 
-  /** 音乐状态 */
-  @Enumerated(value = EnumType.STRING)
-  private MusicStatus status;
+    /**
+     * 音乐名称
+     */
+    private String name;
 
-  @ManyToMany
-  @JoinTable(
-      name = "artist_music",
-      joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "music_id", referencedColumnName = "id"))
-  private List<Artist> artistList = new ArrayList<>();
+    /**
+     * 音乐状态
+     */
+    @Enumerated(value = EnumType.STRING)
+    private MusicStatus status;
 
-  /** 音乐简介 */
-  private String description;
+    @ManyToMany
+    @JoinTable(
+            name = "artist_music",
+            joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "music_id", referencedColumnName = "id"))
+    private List<Artist> artistList = new ArrayList<>();
+
+    /**
+     * 音乐简介
+     */
+    private String description;
 }
